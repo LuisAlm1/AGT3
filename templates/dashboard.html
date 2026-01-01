@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MarketingBot</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">&#128640;</span>
+                    <span class="logo-text">MarketingBot</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="chat">
+                    <span class="nav-icon">&#128172;</span>
+                    <span>Asistente</span>
+                </a>
+                <a href="#" class="nav-item" data-view="calendar">
+                    <span class="nav-icon">&#128197;</span>
+                    <span>Calendario</span>
+                </a>
+                <a href="#" class="nav-item" data-view="posts">
+                    <span class="nav-icon">&#128196;</span>
+                    <span>Mis Posts</span>
+                </a>
+                <a href="#" class="nav-item" data-view="credits">
+                    <span class="nav-icon">&#128176;</span>
+                    <span>Créditos</span>
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <span class="nav-icon">&#9881;</span>
+                    <span>Configuración</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="credits-widget">
+                    <span class="credits-label">Créditos disponibles</span>
+                    <span class="credits-value" id="creditsBalance">--</span>
+                </div>
+                <a href="/auth/logout" class="logout-btn">Cerrar sesión</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h1 id="viewTitle">Asistente</h1>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span id="userName">Usuario</span>
+                        <span id="pageName" class="page-badge"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Views Container -->
+            <div class="views-container">
+                <!-- Chat View -->
+                <div id="chatView" class="view active">
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="welcome-message">
+                                <div class="welcome-icon">&#128075;</div>
+                                <h2>¡Bienvenido a MarketingBot!</h2>
+                                <p>Soy tu asistente de marketing. Cuéntame sobre tu negocio y te ayudaré a configurar tu estrategia de publicaciones automáticas.</p>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <form id="chatForm" class="chat-form">
+                                <textarea
+                                    id="chatInput"
+                                    placeholder="Escribe tu mensaje aquí..."
+                                    rows="1"
+                                ></textarea>
+                                <button type="submit" class="send-btn" id="sendBtn">
+                                    <span class="send-icon">&#10148;</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calendar View -->
+                <div id="calendarView" class="view">
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button class="calendar-nav" id="prevMonth">&#8249;</button>
+                            <h2 id="calendarMonth">Enero 2025</h2>
+                            <button class="calendar-nav" id="nextMonth">&#8250;</button>
+                        </div>
+                        <div class="calendar-grid">
+                            <div class="calendar-weekdays">
+                                <span>Dom</span>
+                                <span>Lun</span>
+                                <span>Mar</span>
+                                <span>Mié</span>
+                                <span>Jue</span>
+                                <span>Vie</span>
+                                <span>Sáb</span>
+                            </div>
+                            <div class="calendar-days" id="calendarDays">
+                                <!-- Days will be populated by JS -->
+                            </div>
+                        </div>
+                        <div class="calendar-legend">
+                            <span class="legend-item"><span class="dot scheduled"></span> Programado</span>
+                            <span class="legend-item"><span class="dot posted"></span> Publicado</span>
+                            <span class="legend-item"><span class="dot failed"></span> Error</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Posts View -->
+                <div id="postsView" class="view">
+                    <div class="posts-container">
+                        <div class="posts-header">
+                            <h2>Posts Programados</h2>
+                            <button class="btn btn-primary" id="scheduleMoreBtn">Programar más</button>
+                        </div>
+                        <div class="posts-list" id="postsList">
+                            <!-- Posts will be populated by JS -->
+                            <div class="empty-state">
+                                <span class="empty-icon">&#128196;</span>
+                                <p>No hay posts programados todavía</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Credits View -->
+                <div id="creditsView" class="view">
+                    <div class="credits-container">
+                        <div class="credits-balance-card">
+                            <h2>Tu Balance</h2>
+                            <div class="balance-amount" id="balanceAmount">--</div>
+                            <span class="balance-label">créditos disponibles</span>
+                        </div>
+                        <div class="credits-packages">
+                            <h3>Comprar Créditos</h3>
+                            <div class="packages-grid" id="packagesGrid">
+                                <!-- Packages will be populated by JS -->
+                            </div>
+                        </div>
+                        <div class="credits-history">
+                            <h3>Historial de Transacciones</h3>
+                            <div class="history-list" id="historyList">
+                                <!-- History will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings View -->
+                <div id="settingsView" class="view">
+                    <div class="settings-container">
+                        <div class="settings-section">
+                            <h3>Perfil del Negocio</h3>
+                            <div class="setting-item">
+                                <label>Resumen del negocio</label>
+                                <textarea id="businessSummary" readonly></textarea>
+                            </div>
+                            <div class="setting-item">
+                                <label>Estilo de posts</label>
+                                <textarea id="postStyle" readonly></textarea>
+                            </div>
+                            <p class="setting-hint">Para modificar estos valores, usa el chat con el asistente</p>
+                        </div>
+                        <div class="settings-section">
+                            <h3>Página de Facebook</h3>
+                            <div class="setting-item">
+                                <label>Página conectada</label>
+                                <div class="page-selector">
+                                    <span id="connectedPage">--</span>
+                                    <button class="btn btn-outline btn-sm" id="changePageBtn">Cambiar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <h3>Recurrencia de Publicación</h3>
+                            <div class="setting-item">
+                                <label>Frecuencia actual</label>
+                                <span id="currentRecurrence">--</span>
+                            </div>
+                            <div class="setting-item">
+                                <label>Hora preferida</label>
+                                <span id="preferredTime">--</span>
+                            </div>
+                            <p class="setting-hint">Para modificar la recurrencia, usa el chat con el asistente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Page Selection Modal -->
+    <div id="pageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Selecciona una página</h2>
+                <button class="modal-close" id="closePageModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="pages-list" id="pagesList">
+                    <!-- Pages will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Detail Modal -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalle del Post</h2>
+                <button class="modal-close" id="closePostModal">&times;</button>
+            </div>
+            <div class="modal-body" id="postModalBody">
+                <!-- Post details will be populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
