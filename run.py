@@ -21,7 +21,7 @@ if __name__ == '__main__':
     from hypercorn.asyncio import serve
 
     config = Config()
-    config.bind = ["127.0.0.1:5000"]
+    config.bind = ["127.0.0.1:5001"]
     config.accesslog = "-"
     config.errorlog = "-"
     config.use_reloader = os.environ.get('DEBUG', 'False').lower() == 'true'
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     print("=" * 50)
     print("MarketingBot SaaS - Starting...")
     print("=" * 50)
-    print(f"Server: http://127.0.0.1:5000")
+    print(f"Server: http://127.0.0.1:5001")
     print("=" * 50)
 
     asyncio.run(serve(app, config))
